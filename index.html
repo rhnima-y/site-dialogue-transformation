@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dialogue & Transformation</title>
+<meta name="description" content="Dialogue & Transformation met en avant les points de vue et le leadership des personnes ayant vécu l'incarcération, et crée des espaces de dialogue sur la prison, l'éducation et la justice.">
+<meta property="og:title" content="Dialogue & Transformation">
+<meta property="og:description" content="Prison · Éducation · Justice. Des espaces de dialogue portés par les personnes ayant vécu l'incarcération.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#3346c8; --yellow:#f3c034; --red:#d9472b;
+  --ink:#16161d; --muted:#5b5b6a; --paper:#fbf8f2; --card:#ffffff; --line:#e8e2d6;
+  --radius:22px; --max:1160px; --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.08;letter-spacing:-.02em}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+section{padding:110px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.eyebrow::before{content:"";width:28px;height:2px;background:currentColor}
+h2{font-size:clamp(34px,5vw,58px);margin:16px 0 22px}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--muted);max-width:720px}
+html[lang=fr] .en, html[lang=en] .fr{display:none !important}
+
+/* points à compléter : visibles seulement en mode brouillon */
+.todo{display:none}
+body.draft .todo{display:inline;background:#ffe7a3;color:#6b4a00;border:1px dashed #c99a1a;border-radius:6px;padding:1px 6px;font-size:.85em;font-family:Inter,sans-serif;font-style:normal}
+.draft-banner{display:none}
+body.draft .draft-banner{display:block;position:fixed;bottom:16px;left:16px;z-index:70;background:var(--ink);color:#fff;font-size:13px;padding:10px 14px;border-radius:12px;max-width:300px;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+
+/* header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .35s var(--ease),box-shadow .35s,padding .35s;padding:22px 0}
+header.scrolled{background:rgba(251,248,242,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);padding:12px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:Fraunces,serif;font-weight:600;font-size:20px}
+.brand img{height:40px;width:auto}
+.brand .mark{display:none;font-weight:800}
+.menu{display:flex;gap:26px;list-style:none;font-size:15px;font-weight:500}
+.menu a{text-decoration:none;position:relative;padding:4px 0}
+.menu a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:100%;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.menu a:hover::after,.menu a.active::after{transform:scaleX(1)}
+.actions{display:flex;align-items:center;gap:12px}
+.lang{display:flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;font-size:13px;font-weight:600}
+.lang button{border:0;background:none;padding:7px 12px;cursor:pointer;font:inherit;color:inherit}
+.lang button.on{background:var(--ink);color:var(--paper)}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:13px 24px;font-weight:600;font-size:15px;text-decoration:none;border:0;cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s,background .3s}
+.btn:hover{transform:translateY(-2px)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 10px 24px -10px var(--red)}
+.btn-ghost{background:transparent;border:1.5px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.burger{display:none;background:none;border:0;cursor:pointer;width:42px;height:42px;position:relative}
+.burger span{position:absolute;left:9px;right:9px;height:2px;background:var(--ink);transition:transform .3s,opacity .3s}
+.burger span:nth-child(1){top:14px}.burger span:nth-child(2){top:20px}.burger span:nth-child(3){top:26px}
+body.open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.open .burger span:nth-child(2){opacity:0}
+body.open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center}
+.hero h1{font-size:clamp(44px,7vw,92px);font-weight:800}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--blue)}
+.hero h1 .amp{color:var(--yellow);font-style:italic}
+.hero p{margin:28px 0 36px;font-size:clamp(18px,2vw,21px);color:var(--muted);max-width:600px}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px}
+.collage{position:relative;aspect-ratio:1/1.12}
+.collage .ph{position:absolute;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);background:var(--line)}
+.collage .ph img{width:100%;height:100%;object-fit:cover}
+.collage .p1{width:68%;height:58%;top:0;left:0;border:6px solid var(--blue)}
+.collage .p2{width:56%;height:46%;right:0;top:34%;border:6px solid var(--yellow)}
+.collage .p3{width:48%;height:36%;left:8%;bottom:0;border:6px solid var(--red)}
+.collage .logo{position:absolute;right:4%;top:2%;width:26%;aspect-ratio:1;background:var(--paper);border-radius:50%;display:grid;place-items:center;padding:12px;box-shadow:0 14px 30px -14px rgba(0,0,0,.4)}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint::after{content:"";width:1.5px;height:40px;background:linear-gradient(var(--ink),transparent)}
+
+/* marquee */
+.marquee{background:var(--ink);color:var(--paper);padding:22px 0;overflow:hidden;white-space:nowrap}
+.marquee .track{display:inline-flex;gap:48px;animation:slide 40s linear infinite;font-family:Fraunces,serif;font-size:clamp(22px,3vw,34px);font-style:italic}
+.marquee .track span::after{content:"✦";font-style:normal;margin-left:48px;color:var(--yellow)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* mission */
+.mission{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.quote{font-family:Fraunces,serif;font-size:clamp(24px,3vw,38px);line-height:1.25;font-weight:400}
+.quote strong{font-weight:600;background:linear-gradient(transparent 62%,rgba(243,192,52,.55) 62%)}
+.founders{margin-top:26px;padding:20px 22px;border-left:4px solid var(--yellow);background:var(--card);border-radius:0 16px 16px 0;font-size:16px;color:var(--muted)}
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:70px}
+.principle{border-top:2px solid var(--ink);padding-top:20px}
+.principle h3{font-size:22px;margin-bottom:10px}
+.principle p{color:var(--muted);font-size:16px}
+.audience{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.audience span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px}
+
+/* actions */
+.work{display:grid;gap:26px;margin-top:56px}
+.work-item{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.work-item:nth-child(even) .work-img{order:2}
+.work-img{min-height:300px;background:var(--line)}
+.work-item.noimg{grid-template-columns:1fr}.work-item.noimg .work-img{display:none}
+.work-img img{width:100%;height:100%;object-fit:cover}
+.work-txt{padding:40px 38px;display:flex;flex-direction:column;justify-content:center}
+.work-txt .num{font-family:Fraunces,serif;font-size:15px;font-weight:600;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;margin-bottom:20px}
+.work-item:nth-child(1) .num{background:var(--blue)}.work-item:nth-child(2) .num{background:var(--yellow);color:var(--ink)}.work-item:nth-child(3) .num{background:var(--red)}
+.work-txt h3{font-size:clamp(22px,2.4vw,28px);margin-bottom:14px}
+.work-txt p{color:var(--muted);font-size:16px}
+.work-txt p+p{margin-top:12px}
+
+/* values */
+.values{background:var(--blue);color:#fff;border-radius:40px;margin:0 16px}
+.values .eyebrow{color:var(--yellow)}
+.goals{display:grid;grid-template-columns:repeat(2,1fr);gap:0 60px;margin-top:50px;counter-reset:g}
+.goal{padding:24px 0;border-top:1px solid rgba(255,255,255,.22);display:flex;gap:22px;font-size:17px}
+.goal::before{counter-increment:g;content:counter(g,decimal-leading-zero);font-family:Fraunces,serif;color:var(--yellow);font-weight:600;min-width:28px}
+.pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:50px}
+.pill{border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:12px 22px;font-weight:500}
+
+/* events */
+.next{margin-top:34px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--card);border:1.5px dashed var(--red);border-radius:var(--radius);padding:22px 26px}
+.next b{font-family:Fraunces,serif;font-size:20px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.filters button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:9px 18px;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.filters button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.timeline{margin-top:46px;position:relative}
+.timeline::before{content:"";position:absolute;left:118px;top:0;bottom:0;width:2px;background:var(--line)}
+.ev{display:grid;grid-template-columns:100px 1fr;gap:42px;padding:22px 0;position:relative}
+.ev.hide{display:none}
+.ev .date{font-family:Fraunces,serif;font-weight:600;font-size:18px;text-align:right;padding-top:24px;color:var(--muted)}
+.ev::before{content:"";position:absolute;left:111px;top:52px;width:16px;height:16px;border-radius:50%;background:var(--paper);border:3px solid var(--blue)}
+.ev details{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 30px}
+.ev details[open]{box-shadow:0 22px 44px -30px rgba(0,0,0,.3)}
+.ev summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:start}
+.ev summary::-webkit-details-marker{display:none}
+.ev summary h3{font-size:clamp(20px,2.4vw,26px)}
+.ev .where{font-size:14px;color:var(--muted);margin-top:6px}
+.tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:10px}
+.tag.series{background:rgba(217,71,43,.12);color:var(--red)}
+.tag.sym{background:rgba(51,70,200,.1);color:var(--blue)}
+.tag.media{background:rgba(243,192,52,.25);color:#7a5a00}
+.plus{flex:none;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:20px;transition:transform .35s var(--ease),background .3s}
+details[open] .plus{transform:rotate(45deg);background:var(--yellow);border-color:var(--yellow)}
+.ev .body{color:var(--muted);margin-top:18px;font-size:16px}
+.ev .body p+p,.ev .body p+ul,.ev .body ul+p{margin-top:12px}
+.ev .body ul{margin:12px 0 0 18px}
+.ev .body li{margin:8px 0}
+.ev .body b{color:var(--ink);font-weight:600}
+.ev .label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-top:16px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:18px}
+.thumbs button{border:0;padding:0;background:var(--line);border-radius:12px;overflow:hidden;aspect-ratio:4/3;cursor:zoom-in}
+.thumbs button.poster{aspect-ratio:3/4}
+.thumbs img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.thumbs button:hover img{transform:scale(1.05)}
+.thumbs.mosaic{grid-template-columns:repeat(4,1fr);grid-auto-rows:120px;grid-auto-flow:dense}
+.thumbs.mosaic button,.thumbs.mosaic button.poster{aspect-ratio:auto}
+.mosaic img{object-position:center 30%}.mosaic .w{grid-column:span 2}.mosaic .t{grid-row:span 2}.mosaic .big{grid-column:span 2;grid-row:span 2}
+@media (max-width:620px){.thumbs.mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:110px}}
+.ev .link{display:inline-block;margin-top:14px;font-weight:600;color:var(--blue)}
+
+/* team */
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:50px}
+.member{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;cursor:pointer;transition:transform .4s var(--ease),box-shadow .4s;text-align:left;font:inherit;color:inherit}
+.member:hover:not([disabled]){transform:translateY(-5px);box-shadow:0 22px 40px -28px rgba(0,0,0,.35)}
+.member[disabled]{cursor:default}
+.avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:Fraunces,serif;font-weight:600;font-size:24px;color:#fff;margin-bottom:18px;overflow:hidden;flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.member h3{font-size:20px;margin-bottom:4px}
+.member .role{font-size:14px;color:var(--muted)}
+.member .more{margin-top:14px;font-size:13px;font-weight:600;color:var(--blue)}
+.subhead{font-family:Fraunces,serif;font-size:28px;margin-top:80px}
+
+dialog{border:0;border-radius:28px;max-width:600px;width:calc(100% - 32px);max-height:88vh;padding:40px;box-shadow:0 40px 80px -30px rgba(0,0,0,.5);color:var(--ink);margin:auto}
+dialog::backdrop{background:rgba(22,22,29,.6);backdrop-filter:blur(4px)}
+dialog h3{font-size:30px;margin:12px 0 6px}
+dialog .role{color:var(--muted);margin-bottom:18px}
+dialog p{margin-top:12px}
+dialog .close{position:absolute;top:16px;right:16px;border:0;background:var(--paper);width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer}
+#lightbox{max-width:min(1000px,94vw);padding:0;background:transparent;box-shadow:none}
+#lightbox img{max-height:86vh;width:auto;margin:auto;border-radius:16px}
+#lightbox .close{background:#fff}
+#legal{max-width:720px}
+#legal h4{font-family:Fraunces,serif;font-size:19px;margin-top:22px}
+#legal p{font-size:15px;color:var(--muted)}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:12px;margin-top:46px}
+.gallery button{border:0;padding:0;border-radius:18px;overflow:hidden;background:var(--line);cursor:zoom-in}
+.gallery button:nth-child(1){grid-column:span 2;grid-row:span 2}
+.gallery button:nth-child(4){grid-row:span 2}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.gallery button:hover img{transform:scale(1.04)}
+
+/* donate */
+.donate{background:var(--yellow);border-radius:40px;margin:0 16px;padding:90px 0;text-align:center}
+.donate h2{max-width:780px;margin:0 auto 20px}
+.donate p{max-width:600px;margin:0 auto 34px;font-size:19px}
+.donate .btn{background:var(--ink);color:var(--paper)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+form{display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+input,textarea{width:100%;font:inherit;padding:16px 18px;border-radius:14px;border:1.5px solid var(--line);background:var(--card)}
+input:focus,textarea:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(51,70,200,.12)}
+textarea{min-height:150px;resize:vertical}
+.rgpd{font-size:13px;color:var(--muted)}
+.mail{font-family:Fraunces,serif;font-size:clamp(20px,2.4vw,28px);text-decoration:none;border-bottom:2px solid var(--red);word-break:break-all}
+
+footer{padding:60px 0 40px;border-top:1px solid var(--line);margin-top:40px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+footer button{background:none;border:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+
+.reveal{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+html.anim .reveal:not(.in){opacity:0;transform:translateY(30px)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--yellow),var(--red));width:0;z-index:60}
+
+@media (max-width:980px){
+  .hero-grid,.mission,.contact{grid-template-columns:1fr;gap:40px}
+  .collage{max-width:420px;margin:0 auto;width:100%}
+  .scroll-hint{display:none}
+  .principles{grid-template-columns:1fr}
+  .work-item{grid-template-columns:1fr}
+  .work-item:nth-child(even) .work-img{order:0}
+  .work-img{min-height:220px}
+  .goals{grid-template-columns:1fr}
+  .team{grid-template-columns:repeat(2,1fr)}
+  .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
+  .menu{position:fixed;inset:0;background:var(--paper);flex-direction:column;justify-content:center;align-items:center;gap:24px;font-family:Fraunces,serif;font-size:30px;transform:translateY(-100%);transition:transform .5s var(--ease);z-index:-1}
+  body.open .menu{transform:none}
+  .burger{display:block}
+  .actions .btn{display:none}
+}
+@media (max-width:620px){
+  section{padding:80px 0}
+  .wrap{padding:0 16px}
+  .team{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+  .work-txt{padding:28px 24px}
+  .timeline::before{left:7px}
+  .ev{grid-template-columns:1fr;gap:6px;padding-left:34px}
+  .ev::before{left:0;top:6px}
+  .ev .date{text-align:left;padding-top:0}
+  .ev details{padding:22px 20px}
+  .values,.donate{margin:0 8px;border-radius:28px}
+  .brand span.full,.brand img{display:none}
+  .brand .mark{display:inline}
+  dialog{padding:30px 22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="draft-banner"><b>Version de travail.</b> Les étiquettes jaunes signalent ce qui reste à compléter ou à vérifier. Elles disparaissent quand <code>DRAFT</code> passe à <code>false</code> dans le code.</div>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#accueil">
+      <img data-src="logo.webp" data-w="300" alt="" onerror="this.style.display='none'">
+      <span class="full">Dialogue &amp; Transformation</span><span class="mark"><span style="color:var(--blue)">D</span><span style="color:var(--yellow)">&amp;</span><span style="color:var(--red)">T</span></span>
+    </a>
+    <ul class="menu" id="menu">
+      <li><a href="#mission"><span class="fr">Qui sommes-nous</span><span class="en">About</span></a></li>
+      <li><a href="#actions"><span class="fr">Ce que nous faisons</span><span class="en">Our work</span></a></li>
+      <li><a href="#valeurs"><span class="fr">Objectifs et valeurs</span><span class="en">Goals &amp; values</span></a></li>
+      <li><a href="#evenements"><span class="fr">Événements</span><span class="en">Events</span></a></li>
+      <li><a href="#equipe"><span class="fr">Équipe</span><span class="en">Team</span></a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="actions">
+      <div class="lang" role="group" aria-label="Langue / Language">
+        <button data-lang="fr" class="on">FR</button><button data-lang="en">EN</button>
+      </div>
+      <a class="btn btn-red" href="#don"><span class="fr">Faire un don</span><span class="en">Donate</span></a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal"><span class="fr">Prison · Éducation · Justice</span><span class="en">Prison · Education · Justice</span></span>
+      <h1 class="reveal d1">
+        <span class="fr">Penser la prison <em>avec</em> celles et ceux qui l'ont vécue<span class="amp">.</span></span>
+        <span class="en">Thinking about prison <em>with</em> those who lived it<span class="amp">.</span></span>
+      </h1>
+      <p class="reveal d2">
+        <span class="fr">Dialogue &amp; Transformation met en avant les points de vue et le leadership des personnes ayant vécu l'incarcération, et crée des espaces de dialogue et de réflexion autour de la prison, de l'éducation et de la justice.</span>
+        <span class="en">Dialogue &amp; Transformation foregrounds the perspectives and leadership of people who have experienced incarceration, and creates spaces for dialogue and reflection on prison, education and justice.</span>
+      </p>
+      <div class="cta reveal d3">
+        <a class="btn btn-red" href="#evenements"><span class="fr">Nos événements</span><span class="en">Our events</span> →</a>
+        <a class="btn btn-ghost" href="#actions"><span class="fr">Découvrir nos actions</span><span class="en">Discover our work</span></a>
+      </div>
+    </div>
+    <div class="collage reveal d2" aria-hidden="true">
+      <div class="ph p1"><img data-src="sympo2024-groupe.webp" alt=""></div>
+      <div class="ph p2"><img data-src="sympo2026-table-ronde.webp" alt=""></div>
+      <div class="ph p3"><img data-src="sympo2024-livres.webp" alt=""></div>
+      <div class="logo"><img data-src="logo.webp" data-w="300" alt=""></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span class="fr">Défiler</span><span class="en">Scroll</span></div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span class="fr">L'expérience vécue</span><span class="fr">L'écoute</span><span class="fr">L'échange</span><span class="fr">L'analyse critique</span><span class="fr">La solidarité</span><span class="fr">Les pédagogies horizontales</span>
+    <span class="fr">L'expérience vécue</span><span class="fr">L'écoute</span><span class="fr">L'échange</span><span class="fr">L'analyse critique</span><span class="fr">La solidarité</span><span class="fr">Les pédagogies horizontales</span>
+    <span class="en">Lived experience</span><span class="en">Deep listening</span><span class="en">Dialogue</span><span class="en">Critical analysis</span><span class="en">Solidarity</span><span class="en">Horizontal pedagogies</span>
+    <span class="en">Lived experience</span><span class="en">Deep listening</span><span class="en">Dialogue</span><span class="en">Critical analysis</span><span class="en">Solidarity</span><span class="en">Horizontal pedagogies</span>
+  </div>
+</div>
+
+<!-- QUI SOMMES-NOUS -->
+<section id="mission">
+  <div class="wrap">
+    <div class="mission">
+      <div class="reveal">
+        <span class="eyebrow"><span class="fr">Qui sommes-nous</span><span class="en">About us</span></span>
+        <h2><span class="fr">Un réseau transfrontalier d'échange.</span><span class="en">A cross-border network of exchange.</span></h2>
+      </div>
+      <div class="reveal d1">
+        <p class="quote">
+          <span class="fr">Nous sommes des éducateur·rice·s, des apprenant·e·s, des artistes et des militant·e·s, <strong>dont beaucoup ont une expérience vécue de l'incarcération</strong>.</span>
+          <span class="en">We are educators, learners, artists and activists, <strong>many of us with lived experience of incarceration</strong>.</span>
+        </p>
+        <p class="lead" style="margin-top:22px">
+          <span class="fr">Nos espaces réunissent des professeur·e·s, des enseignant·e·s, des étudiant·e·s et des personnes travaillant dans les milieux artistiques, associatifs et sociaux, autour de l'incarcération, de la justice, de l'éducation et du pouvoir transformateur du dialogue à travers la différence.</span>
+          <span class="en">Our spaces bring together professors, teachers, students and people working in the arts, community organizations and social services, around incarceration, justice, education and the transformative power of dialogue across difference.</span>
+        </p>
+        <p class="founders">
+          <span class="fr">Dialogue &amp; Transformation est une association loi 1901 lancée par Hannah Taieb, Michelle Kuo, Simone Davis et Kassia Aleksic.</span>
+          <span class="en">Dialogue &amp; Transformation is a French non-profit founded by Hannah Taieb, Michelle Kuo, Simone Davis and Kassia Aleksic.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle reveal">
+        <h3><span class="fr">L'expérience vécue</span><span class="en">Lived experience</span></h3>
+        <p><span class="fr">Nous mettons en avant, comme leaders et comme participant·e·s, les personnes ayant vécu l'incarcération. Ce respect de l'expérience vécue vaut pour chacun·e d'entre nous.</span><span class="en">We foreground people with lived experience of incarceration as leaders and participants. Our respect for lived experience extends to each of us.</span></p>
+      </div>
+      <div class="principle reveal d1">
+        <h3><span class="fr">Des pédagogies égalitaires</span><span class="en">Egalitarian pedagogies</span></h3>
+        <p><span class="fr">Nous nous formons et formons les autres à des pratiques inclusives, égalitaires et participatives, inspirées de l'organisation américaine Inside-Out et du programme canadien Walls to Bridges.</span><span class="en">We train ourselves and others in inclusive, egalitarian and participatory practices, inspired by the US organization Inside-Out and the Canadian program Walls to Bridges.</span></p>
+      </div>
+      <div class="principle reveal d2">
+        <h3><span class="fr">La présence</span><span class="en">Presence</span></h3>
+        <p><span class="fr">Nous vous invitons à participer avec votre tête (vos idées), mais aussi avec votre cœur (vos émotions, vos contradictions, vos doutes) et votre corps.</span><span class="en">We invite you to take part with your head (your ideas), but also with your heart (your emotions, contradictions and doubts) and your body.</span></p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:56px">
+      <p class="lead"><span class="fr">Nos ateliers et activités s'adressent à des publics qui se rencontrent rarement :</span><span class="en">Our workshops and activities bring together people who rarely meet:</span></p>
+      <div class="audience">
+        <span><span class="fr">Personnes incarcérées</span><span class="en">Incarcerated people</span></span>
+        <span><span class="fr">Personnes récemment sorties</span><span class="en">People recently released</span></span>
+        <span><span class="fr">Jeunes exposé·e·s au risque d'incarcération</span><span class="en">Young people at risk of incarceration</span></span>
+        <span><span class="fr">Artistes et créateur·rice·s</span><span class="en">Artists and creators</span></span>
+        <span><span class="fr">Militant·e·s associatif·ve·s</span><span class="en">Community activists</span></span>
+        <span><span class="fr">Travailleur·euse·s sociaux et métiers de l'aide</span><span class="en">Social workers and helping professions</span></span>
+        <span><span class="fr">Étudiant·e·s et enseignant·e·s</span><span class="en">Students and teachers</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIONS -->
+<section id="actions" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="fr">Ce que nous faisons</span><span class="en">Our work</span></span>
+    <h2 class="reveal d1"><span class="fr">Trois façons d'ouvrir le dialogue</span><span class="en">Three ways to open dialogue</span></h2>
+    <div class="work">
+      <article class="work-item reveal">
+        <div class="work-img"><img data-src="sympo2024-khaled.webp" alt="Symposium Dialogue &amp; Transformation, 2024" onerror="this.closest('.work-item').classList.add('noimg')"></div>
+        <div class="work-txt">
+          <div class="num">01</div>
+          <h3><span class="fr">Des espaces de réflexion sur les pratiques liées au monde carcéral</span><span class="en">Spaces for critical reflection on practices in prison</span></h3>
+          <p><span class="fr">Nous rassemblons des personnes qui ont appris, créé ou sont intervenues en prison, en mettant en avant la parole et l'expérience des personnes ayant vécu l'incarcération. Organisés autour de thèmes différents, nos symposiums annuels, la <i>Dialogue &amp; Transformation Series</i> et nos ateliers créent des espaces de réflexion critique sur les dimensions éthiques, politiques et sociales de l'enseignement et de la création en prison.</span><span class="en">We bring together people who have learned, created or worked in prisons, foregrounding the voices and experiences of those who have been incarcerated. Organized around different themes, our annual symposia, the <i>Dialogue &amp; Transformation Series</i> and our workshops create spaces for dialogue, analysis and reflection on the ethical, political and social dimensions of teaching and creating in prisons.</span></p>
+        </div>
+      </article>
+      <article class="work-item reveal">
+        <div class="work-img"><img data-src="andre-ward-sante.webp" alt="Andre Ward en visite à La Santé" onerror="this.closest('.work-item').classList.add('noimg')"></div>
+        <div class="work-txt">
+          <div class="num">02</div>
+          <h3><span class="fr">Cours et ateliers en prison</span><span class="en">Courses and workshops in prison</span></h3>
+          <p><span class="fr">Des ateliers emmènent des étudiant·e·s internationaux de l'Université américaine de Paris (AUP) au centre pénitentiaire de la Santé pour lire, écrire, réfléchir et créer avec des personnes détenues. Nous y cherchons un apprentissage mutuel, avec des pédagogies horizontales et égalitaires.</span><span class="en">Workshops bring international students from the American University of Paris (AUP) to La Santé prison to read, write, reflect and create with incarcerated people. Through horizontal and egalitarian teaching methods, we seek to foster mutual learning.</span></p>
+          <p><span class="fr">Nous soutenons et mettons en place des interventions animées ou co-animées par des personnes ayant vécu l'incarcération, pour ouvrir des espaces de parole avec des personnes actuellement détenues.</span><span class="en">We also support and organize workshops and talks led or co-led by people who have experienced incarceration, to open spaces for dialogue with people currently incarcerated.</span></p>
+        </div>
+      </article>
+      <article class="work-item reveal">
+        <div class="work-img"><img data-src="atelier-hannah.webp" alt="Atelier Dialogue &amp; Transformation" onerror="this.closest('.work-item').classList.add('noimg')"></div>
+        <div class="work-txt">
+          <div class="num">03</div>
+          <h3><span class="fr">Formations pour enseignant·e·s et intervenant·e·s en prison</span><span class="en">Training for teachers and people who work in prisons</span></h3>
+          <p><span class="fr">Nous proposons des formations et des ateliers aux personnes qui se préparent à enseigner ou à travailler en milieu carcéral. Animées ou co-animées par des personnes ayant vécu l'incarcération, ces formations s'appuient sur des pédagogies horizontales qui favorisent le partage des connaissances et des compétences entre formateur·rice·s et participant·e·s.</span><span class="en">We offer training and workshops to people preparing to teach or work in prisons. Led or co-led by people who have experienced incarceration, they are grounded in horizontal pedagogies that foster mutual sharing of knowledge and skills among trainers and participants.</span></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIFS ET VALEURS -->
+<section id="valeurs" class="values">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="fr">Objectifs et valeurs</span><span class="en">Goals and values</span></span>
+    <h2 class="reveal d1"><span class="fr">Ce qui nous guide</span><span class="en">What guides us</span></h2>
+    <div class="goals">
+      <div class="goal reveal"><span><span class="fr">Construire une communauté de rencontres égalitaires, qui accueille les différences, pour développer une approche réflexive et ouverte de la prison, de l'éducation et de la justice, en mettant en avant le leadership des personnes ayant vécu l'incarcération.</span><span class="en">Build a community of egalitarian encounters that welcomes differences, promotes reflective and open dialogue about prison, education and justice, and foregrounds the leadership of people who have experienced incarceration.</span></span></div>
+      <div class="goal reveal d1"><span><span class="fr">Réfléchir collectivement aux pratiques éducatives et artistiques en prison.</span><span class="en">Reflect collectively on educational and artistic practices in prison.</span></span></div>
+      <div class="goal reveal"><span><span class="fr">Soutenir les professeur·e·s, enseignant·e·s, psychologues, artistes et toutes celles et ceux qui interviennent en milieu carcéral, par des formations et des symposiums qui favorisent le dialogue entre personnes ayant connu l'incarcération et personnes qui travaillent en prison.</span><span class="en">Support teachers, educators, psychologists, artists and all those who work in prisons, through training programs and symposia that enable dialogue between people who have experienced incarceration and people who work in prisons.</span></span></div>
+      <div class="goal reveal d1"><span><span class="fr">Promouvoir la co-recherche, la co-écriture et une production de savoir collaborative, qui respecte l'intégrité de l'histoire de chaque personne.</span><span class="en">Promote collaborative research, writing and knowledge production that respects the integrity and ownership of each person's story.</span></span></div>
+      <div class="goal reveal"><span><span class="fr">Remettre en question les stéréotypes et les idées préconçues sur l'incarcération.</span><span class="en">Challenge stereotypes about incarceration.</span></span></div>
+      <div class="goal reveal d1"><span><span class="fr">Soutenir les personnes incarcérées par des formations et des ateliers, et accompagner celles et ceux qui ont vécu l'incarcération dans leurs projets sociaux, éducatifs et artistiques.</span><span class="en">Support incarcerated people through education and workshops, and create opportunities for people navigating life after incarceration to lead social, educational and artistic projects.</span></span></div>
+    </div>
+    <div class="pills reveal">
+      <span class="pill"><span class="fr">L'écoute, l'échange et l'analyse critique</span><span class="en">Deep listening, dialogue and critical analysis</span></span>
+      <span class="pill"><span class="fr">La solidarité et des liens forts et durables</span><span class="en">Solidarity and strong, long-term relationships</span></span>
+      <span class="pill"><span class="fr">Les pédagogies horizontales et égalitaires</span><span class="en">Horizontal and egalitarian pedagogies</span></span>
+      <span class="pill"><span class="fr">Le même respect pour les savoirs et l'expérience de chacun·e</span><span class="en">Equal respect for everyone's knowledge and experience</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ÉVÉNEMENTS -->
+<section id="evenements">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="fr">Événements</span><span class="en">Events</span></span>
+    <h2 class="reveal d1"><span class="fr">Nos rencontres</span><span class="en">Our gatherings</span></h2>
+    <p class="lead reveal d2"><span class="fr">Symposiums, conférences et ateliers, en français et en anglais, accueillis par l'Université américaine de Paris. Cliquez sur un événement pour voir le programme.</span><span class="en">Symposia, talks and workshops in French and English, hosted by the American University of Paris. Click an event to see the programme.</span></p>
+
+    <div class="next reveal">
+      <b><span class="fr">Prochain rendez-vous</span><span class="en">Next event</span></b>
+      <span><span class="fr">La prochaine date sera annoncée ici. Pour être prévenu·e, écrivez-nous.</span><span class="en">The next date will be announced here. Write to us to be notified.</span> <span class="todo">À remplacer par le prochain événement</span></span>
+      <a class="btn btn-ghost" href="#contact" style="margin-left:auto">Contact →</a>
+    </div>
+
+    <div class="filters reveal" id="filters">
+      <button class="on" data-f="all"><span class="fr">Tout</span><span class="en">All</span></button>
+      <button data-f="series">D&amp;T Series</button>
+      <button data-f="sym">Symposiums</button>
+      <button data-f="media"><span class="fr">Médias</span><span class="en">Media</span></button>
+    </div>
+
+    <div class="timeline">
+      <!-- 2026 -->
+      <div class="ev reveal" data-k="series">
+        <div class="date"><span class="fr">5 oct. 2026</span><span class="en">Oct 5, 2026</span></div>
+        <details open>
+          <summary><div><span class="tag series">Dialogue &amp; Transformation Series</span><h3>Rethinking Desistance and Reentry</h3><div class="where"><span class="fr">Lundi 5 octobre 2026, 18h30 · American University of Paris, 6 rue du Colonel Combes, Paris</span><span class="en">Monday 5 October 2026, 6:30 pm · American University of Paris, 6 rue du Colonel Combes, Paris</span></div></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">Repenser la désistance et la réinsertion : deux regards confrontés sur la sortie de délinquance, celui du droit pénal américain et celui de la sociologie de la réaction sociale, devant des étudiant·e·s, des enseignant·e·s-chercheur·e·s et des professionnel·le·s du secteur.</span><span class="en">Rethinking desistance and reentry: two perspectives on leaving crime behind, American criminal law and the sociology of social reaction, in conversation before students, academics and practitioners.</span></p>
+            <ul>
+              <li><b>Jennifer Ritchie</b>, <span class="fr">procureure aux États-Unis (État de Washington)</span><span class="en">prosecutor, Washington State, USA</span></li>
+              <li><b>Youssef Rhnima</b>, <span class="fr">sociologue et criminologue, directeur de Dialogue &amp; Transformation</span><span class="en">sociologist and criminologist, director of Dialogue &amp; Transformation</span></li>
+            </ul>
+            <div class="thumbs">
+              <button class="poster" data-full="conf2026-ritchie-rhnima.webp"><img data-src="conf2026-ritchie-rhnima.webp" alt="Jennifer Ritchie et Youssef Rhnima, 5 octobre 2026"></button>
+              <button class="poster" data-full="conf2026-ritchie-rhnima-2.webp"><img data-src="conf2026-ritchie-rhnima-2.webp" alt="Jennifer Ritchie et Youssef Rhnima, 5 octobre 2026"></button>
+            </div>
+            <p style="font-size:14px"><span class="fr">Photos : Michelle Perez.</span><span class="en">Photos: Michelle Perez.</span></p>
+          </div>
+        </details>
+      </div>
+
+      <!-- 2026 juin -->
+      <div class="ev reveal" data-k="sym">
+        <div class="date"><span class="fr">19-20 juin 2026</span><span class="en">June 19-20, 2026</span></div>
+        <details>
+          <summary><div><span class="tag sym">Symposium</span><h3><span class="fr">Soigner et se faire soigner en prison</span><span class="en">Caring and being cared for in prison</span></h3><div class="where"><span class="fr">American University of Paris · Université Paris Cité</span><span class="en">American University of Paris · Université Paris Cité</span></div></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">Troisième de nos symposiums annuels, organisé avec l'American University of Paris et l'Université Paris Cité. Il a réuni des personnes ayant vécu l'incarcération, des professionnel·le·s intervenant en détention, des chercheur·e·s, des artistes et des acteurs institutionnels, dans un espace « hors les murs » de dialogue et d'échange.</span><span class="en">The third of our annual symposia, organized with the American University of Paris and Université Paris Cité. It brought together people with lived experience of incarceration, professionals working in detention, researchers, artists and institutional actors, in a space for dialogue “beyond the walls”.</span></p>
+            <div class="label"><span class="fr">Thèmes</span><span class="en">Themes</span></div>
+            <ul>
+              <li><span class="fr">Les pratiques de soin en détention</span><span class="en">Care practices in detention</span></li>
+              <li><span class="fr">L'accès aux soins et ses obstacles</span><span class="en">Access to healthcare and its obstacles</span></li>
+              <li><span class="fr">Les soins entre pairs et les initiatives portées par des personnes détenues</span><span class="en">Peer care and initiatives led by incarcerated people</span></li>
+              <li><span class="fr">La gestion des émotions, du stress et du deuil en milieu carcéral</span><span class="en">Dealing with emotions, stress and grief in prison</span></li>
+              <li><span class="fr">Les formes alternatives de soin : musique, médiation corporelle</span><span class="en">Alternative forms of care: music, body-based mediation</span></li>
+            </ul>
+            <p><span class="fr">Le 19 juin, à l'AUP : ateliers interactifs et discussions thématiques. Le 20 juin au matin, à l'Université Paris Cité : groupes de travail chargés d'élaborer des propositions opérationnelles.</span><span class="en">June 19 at AUP: interactive workshops and thematic discussions. June 20 morning at Université Paris Cité: working groups developing practical proposals.</span></p>
+            <p><span class="fr">Pour cette troisième édition, un public plus nombreux et plus divers que jamais, avec toujours plus de jeunes : étudiant·e·s, jeunes professionnel·le·s et militant·e·s, aux côtés de personnes ayant vécu l'incarcération et de professionnel·le·s de la détention.</span><span class="en">For this third edition, a larger and more diverse audience than ever, with more and more young people: students, young professionals and activists, alongside people with lived experience of incarceration and prison professionals.</span></p>
+            <div class="thumbs mosaic">
+              <button class="big" data-full="sympo2026-ambiance-07.webp"><img data-src="sympo2026-ambiance-07.webp" alt="Salle comble, symposium 2026"></button>
+              <button class="w" data-full="sympo2026-ambiance-03.webp"><img data-src="sympo2026-ambiance-03.webp" alt="Le public en cercle, 2026"></button>
+              <button class="t" data-full="sympo2026-ambiance-09.webp"><img data-src="sympo2026-ambiance-09.webp" alt="Prise de parole devant la salle, 2026"></button>
+              <button class="t" data-full="sympo2026-mp-jeunes.webp"><img data-src="sympo2026-mp-jeunes.webp" alt="Jeunes participant·e·s, 2026 (photo Michelle Perez)"></button>
+              <button class="w" data-full="sympo2026-table-ronde.webp"><img data-src="sympo2026-table-ronde.webp" alt="Table ronde, 2026"></button>
+              <button class="w" data-full="sympo2026-ambiance-02.webp"><img data-src="sympo2026-ambiance-02.webp" alt="Rencontre entre participant·e·s, 2026"></button>
+              <button class="t" data-full="sympo2026-ambiance-01.webp"><img data-src="sympo2026-ambiance-01.webp" alt="Participant, 2026"></button>
+              <button class="w" data-full="sympo2026-ambiance-08.webp"><img data-src="sympo2026-ambiance-08.webp" alt="Écoute attentive, 2026"></button>
+              <button class="w" data-full="sympo2026-panel.webp"><img data-src="sympo2026-panel.webp" alt="Panel, 2026"></button>
+              <button class="t" data-full="sympo2026-mp-portrait.webp"><img data-src="sympo2026-mp-portrait.webp" alt="Atelier de médiation corporelle, 2026 (photo Michelle Perez)"></button>
+              <button class="w" data-full="sympo2026-ambiance-12.webp"><img data-src="sympo2026-ambiance-12.webp" alt="Atelier en mouvement, 2026"></button>
+              <button class="t" data-full="sympo2026-musique.webp"><img data-src="sympo2026-musique.webp" alt="Le soin par la musique, 2026"></button>
+              <button class="t" data-full="sympo2026-ambiance-10.webp"><img data-src="sympo2026-ambiance-10.webp" alt="Intervenant·e·s, 2026"></button>
+              <button class="t" data-full="sympo2026-ambiance-06.webp"><img data-src="sympo2026-ambiance-06.webp" alt="Échanges en petit groupe, 2026"></button>
+              <button class="w" data-full="sympo2026-echange.webp"><img data-src="sympo2026-echange.webp" alt="Échange, 2026"></button>
+              <button class="w" data-full="sympo2026-discussion.webp"><img data-src="sympo2026-discussion.webp" alt="Discussion, 2026"></button>
+              <button class="big" data-full="sympo2026-panel-2.webp"><img data-src="sympo2026-panel-2.webp" alt="Débat, 2026"></button>
+              <button class="t" data-full="sympo2026-intervenant.webp"><img data-src="sympo2026-intervenant.webp" alt="Intervenant, 2026"></button>
+              <button class="t" data-full="sympo2026-mp-atelier.webp"><img data-src="sympo2026-mp-atelier.webp" alt="Atelier au tableau, 2026 (photo Michelle Perez)"></button>
+              <button class="t" data-full="sympo2026-mp-cartes.webp"><img data-src="sympo2026-mp-cartes.webp" alt="Cartes d'atelier, 2026 (photo Michelle Perez)"></button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- 2025 -->
+      <div class="ev reveal" data-k="sym">
+        <div class="date"><span class="fr">20-21 juin 2025</span><span class="en">June 20-21, 2025</span></div>
+        <details>
+          <summary><div><span class="tag sym">Symposium</span><h3><span class="fr">Créer dans et depuis l'incarcération : perspectives transnationales et de genre</span><span class="en">Creating in and from incarceration: transnational and gender perspectives</span></h3><div class="where">American University of Paris</div></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">Ce symposium a exploré les différentes manières dont les personnes incarcérées s'engagent dans des processus créatifs pendant et après leur incarcération, en privilégiant la parole et la vision de personnes ayant vécu l'incarcération. Une perspective transnationale, entre le Pérou et la France.</span><span class="en">This symposium explored the different ways in which incarcerated people engage in creative processes during and after their incarceration, foregrounding the voices and perspectives of people who have experienced incarceration. A transnational perspective, between Peru and France.</span></p>
+            <div class="label"><span class="fr">Intervenant·e·s invité·e·s</span><span class="en">Invited speakers</span></div>
+            <ul>
+              <li><b>Kayrumi</b>, <span class="fr">artiste multidisciplinaire et éducatrice</span><span class="en">multidisciplinary artist and educator</span><br><span class="fr">Présentation virtuelle « Toustes sommes des artistes, libère-le ! » : conversation sur son art et ses expériences créatives dans et depuis la prison pour femmes de Cusco (Pérou). Atelier artistique de création d'une peinture murale collective, et vernissage de ses œuvres. Modération : Sharie Neira.</span><span class="en">Virtual presentation “We are all artists! Liberate it!”: a conversation about her art and creative experiences in and since her imprisonment in Cusco, Peru. Art workshop to create a collective mural, and an exhibition of her work. Moderator: Sharie Neira.</span></li>
+              <li><b>Oscar Vásquez Bermejo</b>, <span class="fr">sociologue, spécialiste de la justice restaurative</span><span class="en">sociologist and restorative justice specialist</span><br><span class="fr">« L'expérience de la justice restauratrice au Pérou et en Amérique latine » : conférence sur sa collaboration à un projet de justice réparatrice avec des adolescent·e·s au Pérou. Modération : HW.</span><span class="en">“The experience of restorative justice in Peru and Latin America”: a talk on his collaborative work on a restorative justice project with adolescents in Peru. Moderator: HW.</span></li>
+              <li><b>Khaled Miloudi</b>, <span class="fr">poète, spécialiste de la justice restaurative</span><span class="en">poet and restorative justice specialist</span><br><span class="fr">« Résister à l'effacement par la force de la création » : discussion sur son processus d'écriture et d'enseignement de la poésie, notamment ses ateliers avec des personnes incarcérées et avec le personnel pénitentiaire dans les prisons françaises. Modération : Youssef Rhnima.</span><span class="en">“Resisting erasure through the power of creation”: a discussion of his process of writing and teaching poetry, including his workshops with incarcerated people and prison staff in French prisons. Moderator: Youssef Rhnima.</span></li>
+            </ul>
+            <p class="small" style="font-size:14px"><span class="fr">Illustration : « Vue de la cour de la prison », Kayrumi, 2023.</span><span class="en">Illustration: “View of the prison courtyard”, Kayrumi, 2023.</span></p>
+            <div class="thumbs">
+              <button class="poster fr" data-full="sympo2025-fr-1.webp"><img data-src="sympo2025-fr-1.webp" alt="Programme du symposium 2025, page 1"></button>
+              <button class="poster fr" data-full="sympo2025-fr-2.webp"><img data-src="sympo2025-fr-2.webp" alt="Programme du symposium 2025, page 2"></button>
+              <button class="poster en" data-full="sympo2025-en-1.webp"><img data-src="sympo2025-en-1.webp" alt="2025 symposium programme, page 1"></button>
+              <button class="poster en" data-full="sympo2025-en-2.webp"><img data-src="sympo2025-en-2.webp" alt="2025 symposium programme, page 2"></button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- 2024 -->
+      <div class="ev reveal" data-k="sym">
+        <div class="date"><span class="fr">Juin 2024</span><span class="en">June 2024</span></div>
+        <details>
+          <summary><div><span class="tag sym">Symposium</span><h3><span class="fr">Intervenir et apprendre en prison</span><span class="en">Teaching and learning in prison</span></h3><div class="where"><span class="fr">American University of Paris · bilingue anglais-français, avec traduction</span><span class="en">American University of Paris · bilingual French-English, with translation</span></div></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">Ce symposium a réuni des personnes impliquées dans l'éducation et la création en prison, ancien·ne·s détenu·e·s et personnes non incarcérées, pour interroger nos pratiques à partir de nos expériences d'enseignement, d'intervention et d'apprentissage. Dans une perspective égalitaire et d'épistémologie plurielle, il visait à décloisonner les appartenances institutionnelles et professionnelles (secondaire et université, savoirs académiques et pratiques artistiques) et à croiser les regards de la France et de l'Amérique du Nord, sous forme d'ateliers et de discussions inspirés de la pédagogie active.</span><span class="en">This symposium brought together people involved in education and creation in prison, formerly incarcerated and non-incarcerated, to question our practices through our experiences of teaching, intervening and learning. From an egalitarian, pluralist perspective, it sought to break down institutional and professional boundaries (secondary school and university, academic knowledge and artistic practice) and to bring French and North American perspectives into dialogue, through workshops and discussions inspired by active pedagogy.</span></p>
+            <div class="label"><span class="fr">Au programme</span><span class="en">Programme</span></div>
+            <ul>
+              <li><b><span class="fr">Qu'est-ce qu'on fait quand on intervient, apprend et crée en prison ?</span><span class="en">What are we doing when we teach, learn and create in prison?</span></b><br><span class="fr">Atelier participatif animé par</span><span class="en">Participatory workshop led by</span> Hannah Taieb, HW (Dialogue &amp; Transformation) <span class="fr">et</span><span class="en">and</span> Michelle Kuo (AUP, National Chengchi University, Dialogue &amp; Transformation).</li>
+              <li><b><span class="fr">Sortir de la prison, création des savoirs et des trajectoires. Partie 1 : perspectives françaises</span><span class="en">Leaving prison, creating knowledge and pathways. Part 1: French perspectives</span></b><br><span class="fr">Table ronde animée par Jules Ramage (artiste) et Hannah Taieb, avec Brigitte Brami (poète, écrivaine) et Stéphane (auteur, réalisateur, agent d'accueil).</span><span class="en">Round table led by Jules Ramage (artist) and Hannah Taieb, with Brigitte Brami (poet, writer) and Stéphane (writer, filmmaker).</span></li>
+              <li><b><span class="fr">Partie 2 : perspectives nord-américaines</span><span class="en">Part 2: North American perspectives</span></b><br><span class="fr">Table ronde animée par Michelle Kuo, Lauren Vanzandt-Escobar et Andre Ward (directeur, Institute for Justice and Opportunity, John Jay College of Criminal Justice), avec BL Shirelle (musicienne, militante, co-directrice de FREER Records), Tiina Eldridge (chercheuse, militante, directrice de Rittenhouse) et Lorraine Pinnock (coordinatrice de Walls to Bridges Ontario).</span><span class="en">Round table led by Michelle Kuo, Lauren Vanzandt-Escobar and Andre Ward (Director, Institute for Justice and Opportunity, John Jay College of Criminal Justice), with BL Shirelle (musician, activist, Co-Executive Director of FREER Records), Tiina Eldridge (researcher, activist, Director of Rittenhouse) and Lorraine Pinnock (Coordinator, Walls to Bridges Ontario).</span></li>
+              <li><b><span class="fr">Le théâtre en/hors prison</span><span class="en">Theatre in and outside prison</span></b><br><span class="fr">Table ronde animée par Kassia Aleksic (chercheuse, Dialogue &amp; Transformation), avec Celia Daniellou-Molinié (autrice et metteuse en scène, Compagnie 16.51 Ouest, chercheuse au Thalim/CNRS), Mourad Aït Ouhmad (comédien, Compagnie Why Theatre) et Luca Giacomoni (metteur en scène, Compagnie Why Theatre).</span><span class="en">Round table led by Kassia Aleksic (researcher, Dialogue &amp; Transformation), with Celia Daniellou-Molinié (writer and director, Compagnie 16.51 Ouest, researcher at Thalim/CNRS), Mourad Aït Ouhmad (actor, Compagnie Why Theatre) and Luca Giacomoni (director, Compagnie Why Theatre).</span></li>
+              <li><b><span class="fr">La prison dans son contexte social et politique</span><span class="en">Prison in its social and political context</span></b><br><span class="fr">Table ronde et ateliers participatifs animés par Kassia Aleksic et Lauren Vanzandt-Escobar.</span><span class="en">Round table and participatory workshops led by Kassia Aleksic and Lauren Vanzandt-Escobar.</span></li>
+            </ul>
+            <p><span class="fr">Avec également la participation de Khaled Miloudi (poète). Projection de <i>Parloir fantôme</i>, film de Stéphane, lors de la table ronde « Sortir de la prison ».</span><span class="en">Also with Khaled Miloudi (poet). Screening of <i>Parloir fantôme</i>, a film by Stéphane, during the "Leaving prison" round table.</span> <span class="todo">Lien vidéo du film et de l'extrait du panel nord-américain à récupérer</span></p>
+            <div class="thumbs">
+              <button data-full="sympo2024-groupe.webp"><img data-src="sympo2024-groupe.webp" alt="Photo de groupe, symposium 2024"></button>
+              <button data-full="sympo2024-khaled.webp"><img data-src="sympo2024-khaled.webp" alt="Symposium 2024"></button>
+              <button data-full="sympo2024-livres.webp"><img data-src="sympo2024-livres.webp" alt="Table de livres, symposium 2024"></button>
+              <button data-full="sympo2024-affiche.webp"><img data-src="sympo2024-affiche.webp" alt="Affiche du symposium 2024"></button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Radio -->
+      <div class="ev reveal" data-k="media">
+        <div class="date"><span class="fr">2022</span><span class="en">2022</span></div>
+        <details>
+          <summary><div><span class="tag media"><span class="fr">Médias</span><span class="en">Media</span></span><h3><span class="fr">D&amp;T sur Radio Notre Dame</span><span class="en">D&amp;T on Radio Notre Dame</span></h3><div class="where"><span class="fr">Émission « Le téléphone du dimanche »</span><span class="en">“Le téléphone du dimanche” programme</span></div></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">Merci à Stéphane Allemand de nous avoir invité·e·s sur Radio Notre Dame et de nous avoir permis de présenter l'association à un large public.</span><span class="en">We are grateful to Stéphane Allemand for inviting us onto Radio Notre Dame and giving us the opportunity to present our organization to a wide audience.</span> <span class="todo">Date à vérifier : l'ancien site indique « décembre 2022 » mais le lien de l'émission est daté du 19/06/2022</span></p>
+            <a class="link" href="https://radionotredame.net/emissions/letelephonedudimanche/19-06-2022/" target="_blank" rel="noopener"><span class="fr">Écouter sur le site de Radio Notre Dame →</span><span class="en">Listen on Radio Notre Dame →</span></a>
+          </div>
+        </details>
+      </div>
+
+      <!-- 2022 -->
+      <div class="ev reveal" data-k="sym">
+        <div class="date"><span class="fr">Avr. 2022</span><span class="en">Apr 2022</span></div>
+        <details>
+          <summary><div><span class="tag sym">Symposium</span><h3><span class="fr">Favoriser la justice éducative : que jeter, que garder ?</span><span class="en">Catalyzing educational justice: what can't be thrown away?</span></h3></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">L'injustice dans le système éducatif a de nombreux visages et repose sur des préjugés profonds. À quoi ressemblerait un système éducatif juste, et comment y parvenir ?</span><span class="en">Educational injustice has many faces and rests on deep prejudice. What does educational justice look like, and how do we achieve it?</span> <span class="todo">Titre anglais à trancher : « Racial Justice » ou « Educational Justice » (les deux versions coexistent sur l'ancien site)</span></p>
+            <div class="label"><span class="fr">Animation</span><span class="en">Moderators</span></div>
+            <ul>
+              <li><b>James Jeter</b>, Full Citizens' Coalition &amp; Dwight Hall Civic Allyship Initiative, Yale University</li>
+              <li><b>Lorraine Pinnock</b>, Walls to Bridges Collective</li>
+              <li><b>Simone Davis</b>, Walls to Bridges Collective &amp; Ethics, Society &amp; Law, University of Toronto</li>
+            </ul>
+            <div class="label"><span class="fr">Intervenant invité</span><span class="en">Invited speaker</span></div>
+            <ul><li><b>Clyde Meikle</b>, Kings Crown Kings &amp; Restoring Promise, Vera Institute of Justice</li></ul>
+            <p><span class="fr">Avec le soutien de Douce François-Elocie (Kanak), avocate à la cour, et de Hannah Davis Taïeb, fondatrice de Dialogue &amp; Transformation.</span><span class="en">With the support of Douce François-Elocie (Kanak), lawyer, and Hannah Davis Taïeb, founder of Dialogue &amp; Transformation.</span></p>
+            <div class="thumbs">
+              <button class="poster" data-full="avril2022-affiche.webp"><img data-src="avril2022-affiche.webp" alt="Affiche, avril 2022"></button>
+              <button data-full="avril2022-photo.webp"><img data-src="avril2022-photo.webp" alt="Rencontre d'avril 2022"></button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- 2021 -->
+      <div class="ev reveal" data-k="sym">
+        <div class="date"><span class="fr">Déc. 2021</span><span class="en">Dec 2021</span></div>
+        <details>
+          <summary><div><span class="tag sym"><span class="fr">Lancement</span><span class="en">Launch</span></span><h3><span class="fr">Événement inaugural</span><span class="en">Inaugural event</span></h3></div><span class="plus">+</span></summary>
+          <div class="body">
+            <p><span class="fr">Avec le soutien du Civic Media Lab de l'Université américaine de Paris, Dialogue &amp; Transformation a organisé une première rencontre entre éducateur·rice·s, étudiant·e·s et militant·e·s du monde entier. L'événement a mis en avant la participation de personnes ayant une expérience vécue de l'incarcération, autour de la prison, de l'éducation et de la justice.</span><span class="en">With support from the Civic Media Lab at the American University of Paris, Dialogue &amp; Transformation hosted a first gathering of educators, students and activists from around the world. The event highlighted the participation of people with lived experience of incarceration, reflecting on prison, education and justice.</span></p>
+            <div class="thumbs">
+              <button data-full="inaugural-1.webp"><img data-src="inaugural-1.webp" alt="Événement inaugural, décembre 2021"></button>
+              <button data-full="inaugural-2.webp"><img data-src="inaugural-2.webp" alt="Événement inaugural, décembre 2021"></button>
+              <button data-full="inaugural-3.webp"><img data-src="inaugural-3.webp" alt="Événement inaugural, décembre 2021"></button>
+              <button data-full="inaugural-4.webp"><img data-src="inaugural-4.webp" alt="Événement inaugural, décembre 2021"></button>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section id="galerie" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="fr">En images</span><span class="en">In pictures</span></span>
+    <h2 class="reveal d1"><span class="fr">Quelques moments partagés</span><span class="en">Moments we shared</span></h2>
+    <div class="gallery reveal">
+      <button data-full="sympo2026-panel.webp"><img data-src="sympo2026-panel.webp" alt="Panel, symposium 2026"></button>
+      <button data-full="sympo2026-echange.webp"><img data-src="sympo2026-echange.webp" alt="Échange, symposium 2026"></button>
+      <button data-full="sympo2024-livres.webp"><img data-src="sympo2024-livres.webp" alt="Table de livres, symposium 2024"></button>
+      <button data-full="conf2026-ritchie-rhnima.webp"><img style="object-position:center 15%" data-src="conf2026-ritchie-rhnima.webp" alt="Jennifer Ritchie et Youssef Rhnima, 5 octobre 2026"></button>
+      <button data-full="sympo2026-musique.webp"><img data-src="sympo2026-musique.webp" alt="Le soin par la musique, 2026"></button>
+      <button data-full="andre-ward-sante.webp"><img data-src="andre-ward-sante.webp" alt="Andre Ward en visite à La Santé"></button>
+      <button data-full="sympo2026-table-ronde.webp"><img data-src="sympo2026-table-ronde.webp" alt="Table ronde, symposium 2026"></button>
+      <button data-full="sympo2024-groupe.webp"><img data-src="sympo2024-groupe.webp" alt="Photo de groupe, symposium 2024"></button>
+      <button data-full="sympo2026-groupes-travail.webp"><img data-src="sympo2026-groupes-travail.webp" alt="Groupes de travail, 2026"></button>
+      <button data-full="atelier-hannah.webp"><img data-src="atelier-hannah.webp" alt="Atelier Dialogue &amp; Transformation"></button>
+      <button data-full="inaugural-2.webp"><img data-src="inaugural-2.webp" alt="Événement inaugural, 2021"></button>
+      <button data-full="sympo2024-khaled.webp"><img data-src="sympo2024-khaled.webp" alt="Symposium 2024"></button>
+      <button data-full="sympo2026-discussion.webp"><img data-src="sympo2026-discussion.webp" alt="Discussion, symposium 2026"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ÉQUIPE -->
+<section id="equipe" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="fr">Équipe</span><span class="en">Team</span></span>
+    <h2 class="reveal d1"><span class="fr">Les personnes derrière D&amp;T</span><span class="en">The people behind D&amp;T</span></h2>
+    <div class="team" id="team"></div>
+    <h3 class="subhead reveal"><span class="fr">Nos partenaires</span><span class="en">Our partners</span></h3>
+    <div class="team" id="partners"></div>
+  </div>
+</section>
+
+<!-- DON -->
+<section id="don" class="donate">
+  <div class="wrap">
+    <span class="eyebrow reveal" style="color:var(--ink)"><span class="fr">Nous soutenir</span><span class="en">Support us</span></span>
+    <h2 class="reveal d1"><span class="fr">Chaque don ouvre un espace de parole de plus.</span><span class="en">Every gift opens one more space for dialogue.</span></h2>
+    <p class="reveal d2"><span class="fr">Vos dons soutiennent nos ateliers en prison, nos formations et nos symposiums.</span><span class="en">Your donations support our prison workshops, training and symposia.</span></p>
+    <a class="btn reveal d3" href="https://www.helloasso.com/associations/dialogue-transformation" target="_blank" rel="noopener"><span class="fr">Faire un don sur HelloAsso</span><span class="en">Donate via HelloAsso</span> →</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact">
+    <div class="reveal">
+      <span class="eyebrow">Contact</span>
+      <h2><span class="fr">Écrivons-nous.</span><span class="en">Let's talk.</span></h2>
+      <p class="lead" style="margin-bottom:28px"><span class="fr">Une question, une envie de participer, une proposition de partenariat ? Vous pouvez nous écrire en français ou en anglais.</span><span class="en">A question, a wish to take part, a partnership idea? Write to us in English or French.</span></p>
+      <a class="mail" href="mailto:dialoguetransformation@gmail.com">dialoguetransformation@gmail.com</a>
+    </div>
+    <div class="reveal d1" style="background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:34px">
+      <p style="font-family:Fraunces,serif;font-size:22px;margin-bottom:12px"><span class="fr">Le plus simple : un e-mail.</span><span class="en">The simplest way: an email.</span></p>
+      <p class="lead" style="font-size:17px;margin-bottom:24px"><span class="fr">Présentez-vous en quelques lignes et dites-nous ce qui vous amène. Nous répondons en français ou en anglais.</span><span class="en">Introduce yourself in a few lines and tell us what brings you. We reply in French or English.</span></p>
+      <a class="btn btn-red" href="mailto:dialoguetransformation@gmail.com?subject=Contact%20site%20Dialogue%20%26%20Transformation"><span class="fr">Nous écrire</span><span class="en">Write to us</span> →</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Dialogue &amp; Transformation · <span class="fr">Association loi 1901</span><span class="en">French non-profit (loi 1901)</span></span>
+    <span><button id="legalBtn"><span class="fr">Mentions légales</span><span class="en">Legal notice</span></button> · <a href="#accueil"><span class="fr">Retour en haut ↑</span><span class="en">Back to top ↑</span></a></span>
+  </div>
+</footer>
+
+<dialog id="bio"><button class="close" aria-label="Fermer / Close">×</button><div id="bioContent"></div></dialog>
+<dialog id="lightbox"><button class="close" aria-label="Fermer / Close">×</button><img id="lbImg" alt=""></dialog>
+<dialog id="legal">
+  <button class="close" aria-label="Fermer / Close">×</button>
+  <h3><span class="fr">Mentions légales</span><span class="en">Legal notice</span></h3>
+  <h4><span class="fr">Éditeur du site</span><span class="en">Publisher</span></h4>
+  <p>Dialogue &amp; Transformation, <span class="fr">association régie par la loi du 1<sup>er</sup> juillet 1901, déclarée à la préfecture de police de Paris le 7 juillet 2020 (JO du 11 juillet 2020)</span><span class="en">non-profit association under the French law of 1 July 1901, registered with the Paris police prefecture on 7 July 2020</span>. <span id="siege"><span class="fr">Siège social :</span><span class="en">Registered office:</span> <span data-k="SIEGE">108 B, boulevard Auguste Blanqui, 75013 Paris</span>. </span><span id="rna"><span class="fr">N° RNA :</span><span class="en">RNA no.:</span> <span data-k="RNA">W751257245</span>. SIREN : 899 049 001. </span>Contact : dialoguetransformation@gmail.com</p>
+  <h4><span class="fr">Directeur·rice de la publication</span><span class="en">Publication director</span></h4>
+  <p>Hannah Davis Taieb, <span class="fr">présidente</span><span class="en">president</span></p>
+  <h4><span class="fr">Hébergement</span><span class="en">Hosting</span></h4>
+  <p>Netlify, Inc., 101 2nd Street, Suite 575, San Francisco, CA 94105, <span class="fr">États-Unis</span><span class="en">USA</span>. +1 415 691 1573. support@netlify.com</p>
+  <h4><span class="fr">Données personnelles</span><span class="en">Personal data</span></h4>
+  <p><span class="fr">Les informations transmises via le formulaire de contact servent uniquement à répondre à votre message. Vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à dialoguetransformation@gmail.com.</span><span class="en">Information sent through the contact form is only used to reply to your message. You may request access to, correction or deletion of your data by writing to dialoguetransformation@gmail.com.</span></p>
+  <h4><span class="fr">Crédits photos</span><span class="en">Photo credits</span></h4>
+  <p>Dialogue &amp; Transformation. <span class="fr">Illustration du symposium 2025 : Kayrumi. Photos de la conférence du 5 octobre 2026 et visuels du symposium 2026 : Michelle Perez.</span><span class="en">2025 symposium illustration: Kayrumi. Photos of the 5 October 2026 talk and 2026 symposium visuals: Michelle Perez.</span></p>
+</dialog>
+
+<script>
+// ===== Réglages =====
+const DRAFT = false; // passer à false pour masquer les étiquettes « à compléter »
+// Images locales, dans le dossier img/ à côté de cette page.
+const IMG = 'img/';
+document.body.classList.toggle('draft', DRAFT);
+const src = p => IMG + p;
+document.querySelectorAll('img[data-src]').forEach(i => {
+  i.src = src(i.dataset.src, i.dataset.w || 750);
+  if (!i.getAttribute('onerror')) i.onerror = () => { const b = i.closest('button'); (b || i).style.display = 'none'; };
+});
+// masque la galerie si aucune image ne se charge
+const gal = document.querySelectorAll('.gallery img'); let galFail = 0;
+gal.forEach(i => i.addEventListener('error', () => { if (++galFail === gal.length) document.getElementById('galerie').style.display = 'none'; }));
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ===== Équipe =====
+const T = '<span class="todo">';
+const colors = ['var(--blue)','var(--red)','#c9971a','#2e8a6e'];
+const team = [
+ {n:'Hannah Davis Taieb', img:'equipe-hannah.webp',
+  r:{fr:'Fondatrice et présidente',en:'Founder and president'},
+  b:{fr:"Fondatrice de Dialogue &amp; Transformation, Hannah Davis Taieb est professeure de communication interculturelle à l'Université américaine de Paris et éducatrice expérimentée dans l'animation de petits groupes. D'origine nord-américaine, elle vit à Paris depuis trente ans. Elle réfléchit à l'emprisonnement depuis l'incarcération de son propre père, en raison de ses convictions politiques, pendant la période McCarthy aux États-Unis. Elle anime des ateliers réunissant des personnes détenues à la Santé et des étudiant·e·s de l'AUP, inspirés de Walls to Bridges. Elle se forme pour devenir psychopraticienne gestaltiste.",
+     en:"Founder of Dialogue &amp; Transformation, Hannah Davis Taieb teaches intercultural communication at the American University of Paris and is an experienced small-group facilitator. Originally from North America, she has lived in Paris for thirty years. She has reflected on imprisonment since her own father was jailed for his political convictions during the McCarthy era in the United States. She leads workshops bringing together people detained at La Santé and AUP students, inspired by Walls to Bridges. She is training as a Gestalt psychotherapist."}},
+ {n:'Youssef Rhnima', r:{fr:'Directeur',en:'Director'},
+  b:{fr:"Sociologue et criminologue, Youssef Rhnima dirige Dialogue &amp; Transformation. Il forme les personnels de l'École nationale d'administration pénitentiaire (Énap) et des travailleur·euse·s sociaux, et intervient à la maison d'arrêt de Paris-La Santé. Son travail interroge la manière dont les institutions fabriquent les trajectoires pénales, et ce que la sortie de prison demande réellement aux personnes et à la société.",
+     en:"Sociologist and criminologist, Youssef Rhnima is the director of Dialogue &amp; Transformation. He trains staff at the French National School of Prison Administration (Énap) and social workers, and works inside La Santé prison in Paris. His work examines how institutions shape criminal-justice trajectories, and what leaving prison truly demands of people and of society."}},
+ {n:'Friederike Windel', r:{fr:"Membre du conseil d'administration",en:'Board member'},
+  b:{fr:"Psychologue, professeure à l'Université américaine de Paris. "+T+"Bio à demander à Friederike</span>",
+     en:"Psychologist, professor at the American University of Paris. "+T+"Bio to be requested</span>"}},
+ {n:'H W', img:'equipe-hw.webp', r:{fr:'Membre',en:'Member'},
+  b:{fr:"HW a été incarcéré pendant 27 mois à Fleury-Mérogis. Cette expérience l'a profondément marqué, et il veut casser le mythe de la prison et les clichés qui s'y rattachent : la prison n'est pas un passage obligé pour les jeunes des quartiers et ne rend pas plus fort, contrairement à ce que beaucoup pensent. Il souhaite briser ce cercle vicieux en inventant des outils et des méthodes libératrices pour la jeunesse. Il anime des ateliers et des formations au sein de Dialogue &amp; Transformation.",
+     en:"HW was incarcerated for 27 months at Fleury-Mérogis. The experience marked him deeply, and he works to break the myth of prison and the clichés attached to it: prison is not a rite of passage for young people from working-class neighbourhoods, and it does not make you stronger, whatever many believe. He wants to break that cycle by creating liberating tools and methods for young people. He leads workshops and training with Dialogue &amp; Transformation."}},
+ {n:'Michelle Kuo', img:'equipe-michelle.webp', r:{fr:'Cofondatrice',en:'Co-founder'},
+  b:{fr:"Michelle Kuo est militante, avocate et autrice du livre primé <a href='https://www.michellekuo.net' target='_blank' rel='noopener'><i>Reading with Patrick</i></a>. Elle a été avocate pour des personnes sans papiers, des personnes immigrées détenues et des personnes incarcérées. Ancienne professeure associée à l'Université américaine de Paris, elle a enseigné en prison en France et aux États-Unis. Elle vit aujourd'hui à Taïwan.",
+     en:"Michelle Kuo is an activist, lawyer and author of the award-winning <a href='https://www.michellekuo.net' target='_blank' rel='noopener'><i>Reading with Patrick</i></a>. She has worked as a lawyer for undocumented people, detained immigrants and incarcerated people. A former associate professor at the American University of Paris, she has taught in prisons in France and the United States. She now lives in Taiwan."}},
+ {n:'Nelly Tieb', img:'equipe-nelly.webp', r:{fr:'Membre',en:'Member'},
+  b:{fr:"« Développez votre étrangeté légitime » (René Char, <i>Partage formel</i>). Depuis son enfance en Algérie, Nelly Tieb a construit sa vie avec les livres. Bibliothécaire de 1979 à 2002, elle participe en 1989 à la fondation de l'association <a href='https://www.lirecestvivre.org' target='_blank' rel='noopener'>Lire c'est Vivre</a>, qui crée les bibliothèques en accès direct de Fleury-Mérogis. Depuis, « le lundi, c'est Fleury » : elle y anime toujours des cercles de lecture.",
+     en:"“Develop your legitimate strangeness” (René Char). Since her childhood in Algeria, Nelly Tieb has built her life with books. A librarian from 1979 to 2002, she helped found <a href='https://www.lirecestvivre.org' target='_blank' rel='noopener'>Lire c'est Vivre</a> in 1989, which created the direct-access libraries at Fleury-Mérogis. Ever since, “Monday is Fleury day”: she still runs reading circles there."}},
+ {n:'Yasmina El Jellouli', img:'equipe-yasmina.webp', r:{fr:'Membre',en:'Member'}, b:null},
+ {n:'Sharie Neira', r:{fr:'Membre',en:'Member'}, b:null},
+ {n:'Kassia Aleksic', r:{fr:"Cofondatrice · membre du conseil d'administration",en:'Co-founder · board member'},
+  b:{fr:"Chercheuse, Kassia Aleksic est l'une des fondatrices de Dialogue &amp; Transformation et siège à son conseil d'administration. Lors du symposium 2024, elle a animé les tables rondes « Le théâtre en/hors prison » et « La prison dans son contexte social et politique ».",
+     en:"A researcher, Kassia Aleksic is one of the founders of Dialogue &amp; Transformation and sits on its board. At the 2024 symposium she led the round tables “Theatre in and outside prison” and “Prison in its social and political context”."}}
+];
+const partners = [
+ {n:'Simone Davis', img:'partenaire-simone.webp',
+  r:{fr:'Cofondatrice · Walls to Bridges, University of Toronto',en:'Co-founder · Walls to Bridges, University of Toronto'},
+  b:{fr:"Simone Davis enseigne l'éthique, la société et le droit à l'Université de Toronto. En 2005, elle a été formée à l'éducation en milieu carcéral par les hommes du programme Inside-Out, dont elle a ensuite fait partie de l'équipe pendant cinq ans. En 2010, elle a cofondé Walls to Bridges, programme national canadien qui réunit étudiant·e·s incarcéré·e·s et étudiant·e·s d'université comme camarades de classe. Le collectif Walls to Bridges défend des pratiques éducatives libératrices, des formations dirigées par des personnes détenues et la sensibilisation aux expériences des personnes qui sont ou ont été dans les prisons canadiennes pour femmes.",
+     en:"Simone Davis teaches Ethics, Society &amp; Law at the University of Toronto. In 2005 she was trained as a prison educator by the men of the Inside-Out Prison Exchange Program, and later spent five years on its staff. In 2010 she co-founded Walls to Bridges, a Canadian national program that brings incarcerated and university students together as classmates. The Walls to Bridges collective is committed to liberatory education, inside-led training, and raising awareness of the experiences of people in and leaving Canada's prisons for women."}},
+ {n:'Lorraine Pinnock', img:'partenaire-lorraine.webp', r:{fr:'Walls to Bridges Ontario',en:'Walls to Bridges Ontario'},
+  b:{fr:"Lorraine Pinnock défend les personnes qui passent du système d'injustice pénale à des communautés saines. Après près de cinq ans sous contrôle correctionnel, elle est convaincue que l'accès à l'enseignement supérieur permet aux personnes défavorisées de réussir et de sortir de la « porte tournante » de l'incarcération, de la libération et de la réincarcération.",
+     en:"Lorraine Pinnock advocates for people moving from the criminal injustice system into healthy communities. Having spent nearly five years under correctional supervision, she believes that access to higher education can transform the prospects of disadvantaged people and help them break the revolving door of admission, release and readmission."}},
+ {n:'James Jeter', img:'partenaire-james.webp', r:{fr:'Full Citizens Coalition',en:'Full Citizens Coalition'},
+  b:{fr:"Originaire de New Haven, James Jeter a été incarcéré pendant 20 ans à la Cheshire Correctional Institution, où il a suivi 20 cours universitaires crédités avec le Center for Prison Education de Wesleyan. Ancien boursier de la Tow Foundation au sein de la Yale Prison Education Initiative, il a étudié au Trinity College et codirige la Full Citizens Coalition to Unlock the Vote.",
+     en:"A New Haven native, James Jeter was incarcerated for 20 years at Cheshire Correctional Institution, where he completed 20 credit-bearing college courses with Wesleyan's Center for Prison Education. A former Tow Foundation Fellow with the Yale Prison Education Initiative, he studied at Trinity College and co-directs the Full Citizens Coalition to Unlock the Vote."}},
+ {n:'Vinny Nguyen', img:'partenaire-vinny.webp', r:{fr:'Kid CAT',en:'Kid CAT'},
+  b:{fr:"Vinny Nguyen est père, mari et animateur de Kid CAT (Creating Awareness Together), un groupe d'hommes condamnés à perpétuité pour des faits commis à l'adolescence, dont la mission est d'inspirer l'humanité par l'éducation, le mentorat et les pratiques réparatrices. Libéré en 2016 après 20 ans d'incarcération, il vit en Californie et œuvre pour les droits humains au Vietnam.",
+     en:"Vinny Nguyen is a father, husband and facilitator of Kid CAT (Creating Awareness Together), a group of men who committed crimes as teenagers and were sentenced to life as adults, whose mission is to inspire humanity through education, mentorship and restorative practices. Released in 2016 after 20 years, he lives in California and works to advance human rights in Vietnam."}}
+];
+const initials = n => n.split(' ').filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase();
+const avatar = (p,i) => `<div class="avatar" style="background:${colors[i%4]}">${p.img ? `<img src="${src(p.img,300)}" alt="" onerror="this.replaceWith(document.createTextNode('${initials(p.n)}'))">` : initials(p.n)}</div>`;
+function render(list, el){
+  el.innerHTML = list.filter(p => DRAFT || !p.todo).map((p,i) => `<button class="member reveal ${['','d1','d2','d3'][i%4]}" data-i="${list.indexOf(p)}" data-l="${el.id}" ${p.b ? '' : 'disabled'}>
+    ${avatar(p,i)}
+    <h3>${p.n}</h3><div class="role"><span class="fr">${p.r.fr}</span><span class="en">${p.r.en}</span></div>
+    ${p.b ? '<div class="more"><span class="fr">Lire la bio →</span><span class="en">Read bio →</span></div>' : (DRAFT ? '<div class="more"><span class="todo">Bio manquante</span></div>' : '')}
+  </button>`).join('');
+}
+render(team, document.getElementById('team'));
+render(partners, document.getElementById('partners'));
+
+const bio = document.getElementById('bio');
+document.addEventListener('click', e => {
+  const m = e.target.closest('.member'); if (!m || m.disabled) return;
+  const i = +m.dataset.i, p = (m.dataset.l === 'team' ? team : partners)[i];
+  document.getElementById('bioContent').innerHTML = `${avatar(p,i)}<h3>${p.n}</h3><div class="role"><span class="fr">${p.r.fr}</span><span class="en">${p.r.en}</span></div><p><span class="fr">${p.b.fr}</span><span class="en">${p.b.en}</span></p>`;
+  bio.showModal();
+});
+
+// ===== Lightbox =====
+const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-full]'); if (!b) return;
+  lbImg.src = src(b.dataset.full, 1500); lbImg.alt = b.querySelector('img')?.alt || ''; lb.showModal();
+});
+document.getElementById('legalBtn').onclick = () => document.getElementById('legal').showModal();
+document.querySelectorAll('dialog').forEach(d => {
+  d.querySelector('.close').onclick = () => d.close();
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });
+});
+
+// ===== Langue =====
+function setLang(l){
+  document.documentElement.lang = l;
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.lang === l));
+  try { localStorage.setItem('dt-lang', l) } catch(e) {}
+}
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => setLang(b.dataset.lang));
+try { const s = localStorage.getItem('dt-lang'); if (s) setLang(s); else if (!navigator.language.startsWith('fr')) setLang('en') } catch(e) {}
+
+// ===== En-tête, progression, lien actif =====
+const header = document.getElementById('top'), bar = document.getElementById('progress');
+const links = [...document.querySelectorAll('.menu a')];
+addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', scrollY > 30);
+  bar.style.width = (scrollY / Math.max(1, document.body.scrollHeight - innerHeight) * 100) + '%';
+  let cur = ''; document.querySelectorAll('main section[id]').forEach(s => { if (s.getBoundingClientRect().top < innerHeight * .4) cur = s.id });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, {passive:true});
+document.getElementById('burger').onclick = () => document.body.classList.toggle('open');
+links.forEach(a => a.onclick = () => document.body.classList.remove('open'));
+
+// ===== Apparition au défilement =====
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }), {threshold:.1});
+document.documentElement.classList.add('anim');
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 1500);
+
+// ===== Filtres d'événements =====
+document.querySelectorAll('#filters button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#filters button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.ev').forEach(ev => ev.classList.toggle('hide', b.dataset.f !== 'all' && ev.dataset.k !== b.dataset.f));
+});
+
+// ===== Mentions légales : masque une ligne non renseignée =====
+document.querySelectorAll('[data-k]').forEach(e=>{ if(/^\{\{/.test(e.textContent)) e.closest('#siege,#rna').remove(); });
+</script>
+</body>
+</html>
