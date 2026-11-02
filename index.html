@@ -160,6 +160,10 @@ details[open] .plus{transform:rotate(45deg);background:var(--yellow);border-colo
 .thumbs img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
 .thumbs button:hover img{transform:scale(1.05)}
 .thumbs.mosaic{grid-template-columns:repeat(4,1fr);grid-auto-rows:120px;grid-auto-flow:dense}
+.videos{display:grid;gap:18px;margin-top:18px}
+.vid{margin:0}
+.vid video{width:100%;aspect-ratio:16/9;border-radius:12px;background:#111;display:block}
+.vid figcaption{font-size:14px;margin-top:8px;opacity:.85}
 .thumbs.mosaic button,.thumbs.mosaic button.poster{aspect-ratio:auto}
 .mosaic img{object-position:center 30%}.mosaic .w{grid-column:span 2}.mosaic .t{grid-row:span 2}.mosaic .big{grid-column:span 2;grid-row:span 2}
 @media (max-width:620px){.thumbs.mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:110px}}
@@ -565,7 +569,13 @@ html.anim .reveal:not(.in){opacity:0;transform:translateY(30px)}
               <li><b><span class="fr">Le théâtre en/hors prison</span><span class="en">Theatre in and outside prison</span></b><br><span class="fr">Table ronde animée par Kassia Aleksic (chercheuse, Dialogue &amp; Transformation), avec Celia Daniellou-Molinié (autrice et metteuse en scène, Compagnie 16.51 Ouest, chercheuse au Thalim/CNRS), Mourad Aït Ouhmad (comédien, Compagnie Why Theatre) et Luca Giacomoni (metteur en scène, Compagnie Why Theatre).</span><span class="en">Round table led by Kassia Aleksic (researcher, Dialogue &amp; Transformation), with Celia Daniellou-Molinié (writer and director, Compagnie 16.51 Ouest, researcher at Thalim/CNRS), Mourad Aït Ouhmad (actor, Compagnie Why Theatre) and Luca Giacomoni (director, Compagnie Why Theatre).</span></li>
               <li><b><span class="fr">La prison dans son contexte social et politique</span><span class="en">Prison in its social and political context</span></b><br><span class="fr">Table ronde et ateliers participatifs animés par Kassia Aleksic et Lauren Vanzandt-Escobar.</span><span class="en">Round table and participatory workshops led by Kassia Aleksic and Lauren Vanzandt-Escobar.</span></li>
             </ul>
-            <p><span class="fr">Avec également la participation de Khaled Miloudi (poète). Projection de <i>Parloir fantôme</i>, film de Stéphane, lors de la table ronde « Sortir de la prison ».</span><span class="en">Also with Khaled Miloudi (poet). Screening of <i>Parloir fantôme</i>, a film by Stéphane, during the "Leaving prison" round table.</span> <span class="todo">Lien vidéo du film et de l'extrait du panel nord-américain à récupérer</span></p>
+            <p><span class="fr">Avec également la participation de Khaled Miloudi (poète). Projection de <i>Parloir fantôme</i>, film de Stéphane, lors de la table ronde « Sortir de la prison ».</span><span class="en">Also with Khaled Miloudi (poet). Screening of <i>Parloir fantôme</i>, a film by Stéphane, during the "Leaving prison" round table.</span></p>
+            <div class="videos">
+              <figure class="vid"><video controls preload="none" playsinline poster="video/dt2024-parloir-fantome.jpg"><source src="video/dt2024-parloir-fantome.mp4" type="video/mp4"></video>
+                <figcaption><span class="fr">Stéphane, <i>Parloir fantôme</i>, film présenté lors de la table ronde « Sortir de la prison » (11 min).</span><span class="en">Stéphane, <i>Parloir fantôme</i>, film screened during the "Leaving prison" round table (11 min).</span></figcaption></figure>
+              <figure class="vid"><video controls preload="none" playsinline poster="video/dt2024-panel-nord-americain.jpg"><source src="video/dt2024-panel-nord-americain.mp4" type="video/mp4"></video>
+                <figcaption><span class="fr">Extrait du panel « Sortir de la prison : perspectives nord-américaines », avec Andre Ward, Tiina Eldridge, Lorraine Pinnock et BL Shirelle (18 min).</span><span class="en">Excerpt from the panel "Leaving prison: North American perspectives", with Andre Ward, Tiina Eldridge, Lorraine Pinnock and BL Shirelle (18 min).</span></figcaption></figure>
+            </div>
             <div class="thumbs">
               <button data-full="sympo2024-groupe.webp"><img data-src="sympo2024-groupe.webp" alt="Photo de groupe, symposium 2024"></button>
               <button data-full="sympo2024-khaled.webp"><img data-src="sympo2024-khaled.webp" alt="Symposium 2024"></button>
